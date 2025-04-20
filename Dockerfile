@@ -18,4 +18,5 @@ WORKDIR /app
 COPY --from=build /app/bin /app/bin
 
 # Define o ponto de entrada
-CMD ["java", "-cp", "/app/bin", "sisfinan.main"]
+CMD ["sh", "-c", "java -cp /app/bin sisfinan.main && sleep 3600"]
+
