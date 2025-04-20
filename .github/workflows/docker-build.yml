@@ -22,7 +22,7 @@ jobs:
         run: docker push murillocwb/sisfinan:latest
 
       - name: Build da imagem Docker
-        run: docker build -t murillosanti/sisfinan:latest .
+        run: docker build -t murillocwb/sisfinan:latest .
 
       - name: Push da imagem para o Docker Hub
-        run: docker push murillosanti/sisfinan:latest
+        run: docker push murillocwb/sisfinan:latest
