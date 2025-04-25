@@ -15,14 +15,18 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Configurar JDK
+      - name: Instalar JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Compilar projeto
-        run: javac -cp .:junit-5.9.1.jar: src/sisfinan/*.java src/sisfinantest/*.java
+      - name: Compilar arquivos .java
+        run: |
+          mkdir bin
+          javac -d bin -cp "bin" $(find ./src -name "*.java")
 
-      - name: Executar testes
-        run: java -jar junit-platform-console-standalone-1.9.1.jar --class-path src --scan-class-path
+      - name: Executar testes (com junit-platform-console)
+        run: |
+          wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.1/junit-platform-console-standalone-1.9.1.jar
+          java -jar junit-platform-console-standalone-1.9.1.jar --class-path bin --scan-class-path
