@@ -1,0 +1,32 @@
+name: Run Java Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compilar arquivos .java
+        run: |
+          mkdir bin
+          javac -d bin -cp "bin" $(find ./src -name "*.java")
+
+      - name: Executar testes (com junit-platform-console)
+        run: |
+          wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.1/junit-platform-console-standalone-1.9.1.jar
+          java -jar junit-platform-console-standalone-1.9.1.jar --class-path bin --scan-class-path
