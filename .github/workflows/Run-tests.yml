@@ -1,0 +1,28 @@
+name: Run Java Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - test
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Compilar projeto
+        run: javac -cp .:junit-5.9.1.jar: src/sisfinan/*.java src/sisfinantest/*.java
+
+      - name: Executar testes
+        run: java -jar junit-platform-console-standalone-1.9.1.jar --class-path src --scan-class-path
